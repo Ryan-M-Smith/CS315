@@ -47,12 +47,13 @@ def main():
 
     # Generate all possible Secret Santa assignments (permutations)
     for receivers in permutations(people):
-        # Each person i gives to receivers[i]
+        # Each giver could theoretically give to each receiver (before checking constraints)
         assignments = list(zip(people, receivers))
         
-        # Check if the assignment is valid. People cannot give gifts to themselves
-        # and must not be in the impermissible pairs.
-        
+        #
+        # People cannot give gifts to themselves and must not be in the impermissible pairs.
+        # If either of these rules are not met, the assignment is invalid.
+        #
         valid = True
         for giver, receiver in assignments:
             if giver == receiver or (giver, receiver) in impermissible:
