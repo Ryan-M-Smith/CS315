@@ -1,3 +1,8 @@
 .vscode/
+__pycache__/
+
 .DS_Store
 *.class
+
+# HW01
+HW01/output.txt
