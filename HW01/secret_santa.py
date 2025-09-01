@@ -44,6 +44,8 @@ def main():
     impermissible = set(parse_input())
     people = list(range(NUM_PEOPLE))
     valid_assignments = []
+    
+    print(f"Finding valid Secret Santa assignments for {NUM_PEOPLE} people with {len(impermissible)} impermissible pairs (input.txt)...")
 
     # Generate all possible Secret Santa assignments (permutations)
     for receivers in permutations(people):
