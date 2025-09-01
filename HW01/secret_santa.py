@@ -4,8 +4,7 @@
 # Created: 2025-08-31
 #
 
-from itertools import product
-from typing import cast
+from itertools import permutations
 
 def parse_input() -> list[tuple[int, int]]:
     """
@@ -41,17 +40,34 @@ def write_output(data: list[tuple[int, int]]) -> None:
 def main():
     """ The main function. """
     
-    NUM_PEOPLE = int(input("How many people are participating? "))
-    
-    impermissible = parse_input()
-    combinations = list(product(range(NUM_PEOPLE), repeat=2))
-    
-    valid = list(filter(lambda c: c not in impermissible, combinations))
-    valid = cast(list[tuple[int, int]], valid)
-    
-    print(f"There are {len(valid)} valid combinations.")
-    
-    write_output(valid)
+    NUM_PEOPLE = 6
+    impermissible = set(parse_input())
+    people = list(range(NUM_PEOPLE))
+    valid_assignments = []
+
+    # Generate all possible Secret Santa assignments (permutations)
+    for receivers in permutations(people):
+        # Each person i gives to receivers[i]
+        assignments = list(zip(people, receivers))
+        
+        # Check if the assignment is valid. People cannot give gifts to themselves
+        # and must not be in the impermissible pairs.
+        
+        valid = True
+        for giver, receiver in assignments:
+            if giver == receiver or (giver, receiver) in impermissible:
+                valid = False
+                break
+        
+        if valid:
+            valid_assignments.append(assignments)
+
+    print(f"There are {len(valid_assignments)} valid Secret Santa assignments.")
+
+    # Write all valid assignments to output.txt
+    with open("output.txt", "w") as file:
+        for assignment in valid_assignments:
+            file.write(", ".join(f"{giver} -> {receiver}" for giver, receiver in assignment) + "\n")
     print("Output saved to output.txt.")
 
 if __name__ == "__main__":
