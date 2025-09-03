@@ -40,7 +40,7 @@ def write_output(data: list[tuple[int, int]]) -> None:
 def main():
     """ The main function. """
     
-    NUM_PEOPLE = 6
+    NUM_PEOPLE = 8
     impermissible = set(parse_input())
     people = list(range(NUM_PEOPLE))
     valid_assignments = []
